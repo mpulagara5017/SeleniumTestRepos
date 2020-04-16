@@ -76,20 +76,22 @@ namespace SE.ExtendReport
             }
         }
 
-        [TearDown]
+        //[TearDown]
+        //public void GetResult()
+        //{
+        //    _driver.QuitFromTheBrowser();
+        //    extent.Flush();
+        //    Thread.Sleep(2000);
+        //    //var status = TestContext.CurrentContext.Result.Outcome.Status;
+        //    //var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
+        //    //var errorMessage = TestContext.CurrentContext.Result.Message;
 
-        public void GetResult()
-        {
-            var status = TestContext.CurrentContext.Result.Outcome.Status;
-            var stackTrace = "<pre>" + TestContext.CurrentContext.Result.StackTrace + "</pre>";
-            var errorMessage = TestContext.CurrentContext.Result.Message;
-
-            if (status == TestStatus.Failed)
-            {
-                test.Log(Status.Fail, stackTrace + errorMessage);
-            }
-            //extent.RemoveTest(test);
-        }
+        //    //if (status == TestStatus.Failed)
+        //    //{
+        //    //    test.Log(Status.Fail, stackTrace + errorMessage);
+        //    //}
+        //    //extent.RemoveTest(test);
+        //}
 
         [OneTimeTearDown]
         public void EndReport()
@@ -97,7 +99,7 @@ namespace SE.ExtendReport
             _driver.QuitFromTheBrowser();
             extent.Flush();
             Thread.Sleep(2000);
-            Send_Report_In_Mail();
+            //Send_Report_In_Mail();
         }
 
 
