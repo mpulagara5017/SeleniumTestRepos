@@ -20,14 +20,14 @@ namespace SE.ExtendReport
     [TestFixture]
     public class GooglePageTest
     {
-        private IWebDriver _driver;
+        private IWebDriver _driver = new ChromeDriver();
         private ExtentReports extent = new ExtentReports();
         public ExtentTest test;
 
         [SetUp]
         public void SetUp()
         {
-            _driver = new ChromeDriver();
+            _driver.NavigateUrl();
         }
 
         [OneTimeSetUp]
@@ -41,7 +41,7 @@ namespace SE.ExtendReport
         [Test]
         public void LoginGmail()
         {
-            _driver.NavigateUrl();
+           
             test = extent.CreateTest("LoginGmail");
             _driver.FindElement(By.ClassName("gb_g")).Click();
             Thread.Sleep(2000);
@@ -57,7 +57,6 @@ namespace SE.ExtendReport
         [Test]
         public void LoadGooglePage()
         {
-            _driver.NavigateUrl();
             test = extent.CreateTest("LoadGooglePage");
             List<string> searches = CommonTestHelper.GetTestData("LoadGooglePage");
             test.Log(Status.Info, "This step shows usage of log(status, details)");
