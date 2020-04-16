@@ -20,13 +20,13 @@ namespace SE.ExtendReport
     [TestFixture]
     public class GooglePageTest
     {
-        private readonly IWebDriver _driver;
+        private IWebDriver _driver;
         private ExtentReports extent = new ExtentReports();
         public ExtentTest test;
 
-        public GooglePageTest()
+        [SetUp]
+        public void SetUp()
         {
-            
             _driver = new ChromeDriver();
         }
 
@@ -36,9 +36,7 @@ namespace SE.ExtendReport
             var domainPath = string.Format("{0}TestResult\\", AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
             var reporter = new ExtentHtmlReporter(domainPath);
             extent.AttachReporter(reporter);
-
         }
-
 
         [Test]
         public void LoginGmail()
@@ -55,8 +53,6 @@ namespace SE.ExtendReport
             //test.Pass("entered username");
             Thread.Sleep(5000);
         }
-
-
 
         [Test]
         public void LoadGooglePage()
@@ -82,7 +78,7 @@ namespace SE.ExtendReport
         }
 
         [TearDown]
-        
+
         public void GetResult()
         {
             var status = TestContext.CurrentContext.Result.Outcome.Status;
@@ -117,11 +113,11 @@ namespace SE.ExtendReport
             TimeAndDate.Replace("/", "_");
             TimeAndDate.Replace(":", "_");
 
-            mail.Subject = "Automation Test Report_"+TimeAndDate;
+            mail.Subject = "Automation Test Report_" + TimeAndDate;
 
             mail.Body = "Please find the attached report to get details.";
 
-            string actualPath =  string.Format("{0}TestResult\\", AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+            string actualPath = string.Format("{0}TestResult\\", AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
 
             var mostRecentlyModified = Directory.GetFiles(actualPath, "*.html")
             .Select(f => new FileInfo(f).FullName).ToList();
@@ -134,7 +130,7 @@ namespace SE.ExtendReport
                 attachment = new Attachment(attach);
                 mail.Attachments.Add(attachment);
             }
-           
+
 
             SmtpClient SmtpServer = new SmtpClient("smtp.mandrillapp.com");
             SmtpServer.Port = 587;
