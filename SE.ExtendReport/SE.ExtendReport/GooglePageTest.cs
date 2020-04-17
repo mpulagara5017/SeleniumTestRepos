@@ -20,19 +20,25 @@ namespace SE.ExtendReport
     [TestFixture]
     public class GooglePageTest
     {
-        private IWebDriver _driver = new ChromeDriver();
+        private static IWebDriver _driver;
         private ExtentReports extent = new ExtentReports();
         public ExtentTest test;
 
-        [SetUp]
-        public void SetUp()
-        {
-            _driver.NavigateUrl();
-        }
+        //[SetUp]
+        //public void SetUp()
+        //{
+        //    _driver.NavigateUrl();
+        //}
 
         [OneTimeSetUp]
         public void StartReport()
         {
+            ChromeOptions chromeOptions = new ChromeOptions()
+            {
+                BinaryLocation = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+            };
+            _driver = new ChromeDriver(chromeOptions);
+            _driver.NavigateUrl();
             var domainPath = string.Format("{0}TestResult\\", AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
             var reporter = new ExtentHtmlReporter(domainPath);
             extent.AttachReporter(reporter);
@@ -41,7 +47,7 @@ namespace SE.ExtendReport
         [Test]
         public void LoginGmail()
         {
-           
+
             test = extent.CreateTest("LoginGmail");
             _driver.FindElement(By.ClassName("gb_g")).Click();
             Thread.Sleep(2000);
